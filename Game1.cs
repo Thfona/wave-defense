@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Comora;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -23,6 +24,7 @@ public class Game1 : Game
     private Texture2D skullSprite;
 
     private readonly Player player = new();
+    private Camera camera;
 
     public Game1()
     {
@@ -36,6 +38,8 @@ public class Game1 : Game
         graphics.PreferredBackBufferWidth = screenWidth;
         graphics.PreferredBackBufferHeight = screenHeight;
         graphics.ApplyChanges();
+
+        camera = new(graphics.GraphicsDevice);
 
         base.Initialize();
     }
@@ -64,6 +68,9 @@ public class Game1 : Game
 
         player.Update(gameTime);
 
+        camera.Position = player.Position;
+        camera.Update(gameTime);
+
         base.Update(gameTime);
     }
 
@@ -71,7 +78,7 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        spriteBatch.Begin();
+        spriteBatch.Begin(camera);
 
         spriteBatch.Draw(backgroundSprite, new Vector2(-500, -500), Color.White);
         spriteBatch.Draw(playerSprite, player.Position, Color.White);
