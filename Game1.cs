@@ -22,6 +22,8 @@ public class Game1 : Game
     private Texture2D ballSprite;
     private Texture2D skullSprite;
 
+    private readonly Player player = new();
+
     public Game1()
     {
         graphics = new GraphicsDeviceManager(this);
@@ -60,7 +62,7 @@ public class Game1 : Game
             Exit();
         }
 
-        // TODO: Add your update logic here
+        player.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -72,6 +74,7 @@ public class Game1 : Game
         spriteBatch.Begin();
 
         spriteBatch.Draw(backgroundSprite, new Vector2(-500, -500), Color.White);
+        spriteBatch.Draw(playerSprite, player.Position, Color.White);
 
         spriteBatch.End();
 
